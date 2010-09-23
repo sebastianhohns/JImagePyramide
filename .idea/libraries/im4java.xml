@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="im4java">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/im4java-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
