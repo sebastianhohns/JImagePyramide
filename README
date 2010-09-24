@@ -1,0 +1,23 @@
+This lib provides a way to convert images to a image pyramide format used
+to zoom and pane pictures in a web page (with the help Zoomify, Openzoom,...).
+It's used by the imagezoom plugin for Grails (http://grails.org/plugin/imagezoom ).
+
+Currently graphicsmagick and imagemagick are supported though im4java.
+
+Required libs:
+- commons-io (http://commons.apache.org/io/ )
+- im4java (http://im4java.sourceforge.net/ )
+
+If you want to use this standalone, you need to make sure that the two libs are
+in your classpath. After this you just need to add these to lines to your code:
+
+JImagePyramideProcessor p = new JImagePyramideProcessor(<imagelib>, <targetFormat>, <numCPUCores>, <tmpFileFormat);
+p.process(<originalImage>,<targetDir>);
+
+while:
+- imagelib - is either im4java-gm for graphicsmagick or im4java-im for imagemagick
+- targetformat - currently only the zoomify file format is support, works with Zoomfiy and Openzoom image viewers.
+- tmpFileFormat - temporary file format. A uncompressed file format like tif is faster but requires more space on disc
+
+It's also possible to convert from the command line.
+java -jar JImagePyramide.jar <originalImage> <targetDir> <targetFormat>

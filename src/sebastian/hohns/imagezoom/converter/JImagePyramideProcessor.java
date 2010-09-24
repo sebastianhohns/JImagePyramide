@@ -67,15 +67,15 @@ public class JImagePyramideProcessor {
      * @param tmpImageFormat image format for temporary images. Choose a format (pnm, tif) with compression to speed up calculation for the cost of higher disk usage.
      * @throws UnsupportedImageLibaryException
      */
-    public JImagePyramideProcessor(String imgLib, String targetFormat, int usableThreads, String tmpImageFormat, boolean asyncCalculation) throws UnsupportedImageLibaryException {
+    public JImagePyramideProcessor(String imgLib, String targetFormat, int usableThreads, String tmpImageFormat) {
         format = new ZoomifyFormat();
 
         if (imgLib.equals("im4java-im")) {
-            io = new ImagemagickOperations(tmpImageFormat, asyncCalculation);
+            io = new ImagemagickOperations(tmpImageFormat, false);
         } else if (imgLib.equals("im4java-gm")) {
-            io = new GraphicsmagickOperations(tmpImageFormat, asyncCalculation);
-        } else {
-            throw new UnsupportedImageLibaryException(imgLib + " is not a supported image libary.");
+            io = new GraphicsmagickOperations(tmpImageFormat, false);
+        } else { //Default to imagemagick
+            io = new ImagemagickOperations(tmpImageFormat, false);
         }
 
         //Default threadpool size to the number of processors.
@@ -161,6 +161,7 @@ public class JImagePyramideProcessor {
         }
 
         Enumeration<ZipEntry> pics = (Enumeration<ZipEntry>) imageZip.entries();
+
         ZipEntry entry;
         try {
             while (pics.hasMoreElements()) {
@@ -321,6 +322,13 @@ public class JImagePyramideProcessor {
 
         input.close();
         out.close();
+    }
+
+    public static void main(String[] args) {
+       if(args.length==3) {         
+           JImagePyramideProcessor p = new JImagePyramideProcessor(args[2], "jpg", -1, "jpg");
+           p.process(args[0],args[1]);
+       } 
     }
 }
 
