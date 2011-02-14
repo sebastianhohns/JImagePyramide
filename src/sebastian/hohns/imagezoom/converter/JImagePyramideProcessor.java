@@ -94,7 +94,7 @@ public class JImagePyramideProcessor {
     public boolean process(String orgImage, String targetPath) {
         File org = new File(orgImage);
         if (org.exists() && org.canRead() && new File(targetPath).canWrite()) {
-            OriginalImage p = new OriginalImage(org, format, io, targetPath + "/" + FilenameUtils.getBaseName(org.getName()));
+            OriginalImage p = new OriginalImage(org, format, io, targetPath + File.separator + FilenameUtils.getBaseName(org.getName()));
 
             Future f = service.submit(p);
             buildZoomlevel(p, f);
@@ -124,7 +124,7 @@ public class JImagePyramideProcessor {
         for (String orgImage : images) {
             org = new File(orgImage);
             if (org.exists()) {
-                OriginalImage p = new OriginalImage(org, format, io, targetPath + "/" + FilenameUtils.getBaseName(org.getName()));
+                OriginalImage p = new OriginalImage(org, format, io, targetPath + File.separator + FilenameUtils.getBaseName(org.getName()));
                 Future f = service.submit(p);
                 buildZoomlevel(p, f);
                 props.add(p);
@@ -155,7 +155,7 @@ public class JImagePyramideProcessor {
 
         List<String> images = new ArrayList<String>(imageZip.size());
         //Unzip file to tmp dir
-        String tmpPath = System.getProperty("java.io.tmpdir") + "/" + FilenameUtils.getBaseName(imageZip.getName());
+        String tmpPath = System.getProperty("java.io.tmpdir") + File.separator + FilenameUtils.getBaseName(imageZip.getName());
         if (!new File(tmpPath).exists()) {
             new File(tmpPath).mkdirs();
         }
@@ -267,7 +267,7 @@ public class JImagePyramideProcessor {
 
         //Cut tiles from row.
         for (int i = 0; i <= row.getRequiredCols(); i++) {
-            service.submit(new ImageTile(this, row, p.getTargetDir() + "/" + format.getTileGroup(p.getTargetDir(), p.incrementTileCounter()), i));
+            service.submit(new ImageTile(this, row, p.getTargetDir() + File.separator + format.getTileGroup(p.getTargetDir(), p.incrementTileCounter()), i));
         }
     }
 
@@ -291,7 +291,7 @@ public class JImagePyramideProcessor {
      */
     public void moveToTargetDir(OriginalImage p, File source, String destFilename) {
         try {
-            File targetFile = new File(p.getTargetDir() + "/" + format.getTileGroup(p.getTargetDir(), p.incrementTileCounter()) + destFilename);
+            File targetFile = new File(p.getTargetDir() + File.separator + format.getTileGroup(p.getTargetDir(), p.incrementTileCounter()) + destFilename);
             if (targetFile.exists()) {
                 targetFile.delete();
             }

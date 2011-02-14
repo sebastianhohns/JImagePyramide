@@ -85,9 +85,9 @@ public class ZoomifyFormat implements ImageFormat {
     public synchronized String getTileGroup(String basePath, int counter) {
         //Create a new TileGroup if MAX_FILES_IN_TILEGROUP is reached
         if (counter % MAX_FILES_IN_TILEGROUP == 0) {
-            new File(basePath + "/TileGroup" + (int) Math.floor(counter / MAX_FILES_IN_TILEGROUP)).mkdirs();
+            new File(basePath + File.separator+ "TileGroup" + (int) Math.floor(counter / MAX_FILES_IN_TILEGROUP)).mkdirs();
         }
-        return "TileGroup" + (int) Math.floor(counter / MAX_FILES_IN_TILEGROUP) + "/";
+        return "TileGroup" + (int) Math.floor(counter / MAX_FILES_IN_TILEGROUP) + File.separator;
     }
 
     /**
@@ -100,7 +100,7 @@ public class ZoomifyFormat implements ImageFormat {
     public void generateXMLFile(String targetDir, int width, int height, int tileCount) {
         Writer writer =null;
         try {
-            writer = new FileWriter(targetDir + "/ImageProperties.xml");
+            writer = new FileWriter(targetDir + File.separator +"ImageProperties.xml");
             writer.write("<IMAGE_PROPERTIES WIDTH=\"" + width + "\" HEIGHT=\"" + height + "\" NUMTILES=\"" + tileCount + "\" NUMIMAGES=\"1\" VERSION=\"1.8\" TILESIZE=\"" + MAX_FILES_IN_TILEGROUP + "\" />");
         } catch (IOException io) {
             io.printStackTrace();

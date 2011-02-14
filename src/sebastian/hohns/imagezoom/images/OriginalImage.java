@@ -148,7 +148,7 @@ public class OriginalImage extends ImageObject {
      * @return path
      */
     public synchronized String getTempPath() {
-        return System.getProperty("java.io.tmpdir") + "/" + FilenameUtils.getBaseName(getImageName()) + "/";
+        return System.getProperty("java.io.tmpdir") + File.separator + FilenameUtils.getBaseName(getImageName()) + "/";
     }
 
     /**
